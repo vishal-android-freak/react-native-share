@@ -174,6 +174,8 @@ public abstract class ShareIntent {
             }
         } else if (!TextUtils.isEmpty(message)) {
             this.getIntent().putExtra(Intent.EXTRA_TEXT, message);
+            this.getIntent().putExtra(Intent.EXTRA_TITLE, "Fakespot - Secure Shopping")
+            this.getIntent().addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
     }
 
