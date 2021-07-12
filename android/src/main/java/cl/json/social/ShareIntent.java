@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import cl.json.RNShareModule;
 import cl.json.ShareFile;
 import cl.json.ShareFiles;
+import cl.json.R;
 
 /**
  * Created by disenodosbbcl on 23-07-16.
@@ -108,6 +109,7 @@ public abstract class ShareIntent {
 
         if (ShareIntent.hasValidKey("title", options)) {
             this.chooserTitle = options.getString("title");
+            this.getIntent().putExtra(Intent.EXTRA_TITLE, this.chooserTitle);
         }
 
         String message = "";
@@ -174,7 +176,14 @@ public abstract class ShareIntent {
             }
         } else if (!TextUtils.isEmpty(message)) {
             this.getIntent().putExtra(Intent.EXTRA_TEXT, message);
-            this.getIntent().putExtra(Intent.EXTRA_TITLE, "Fakespot - Secure Shopping")
+            Resources resources = context.getResources();
+            Uri uri = new Uri.Builder()
+                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                .authority(resources.getResourcePackageName(R.drawable.fakespot_logo))
+                .appendPath(resources.getResourceTypeName(R.drawable.fakespot_logo))
+                .appendPath(resources.getResourceEntryName(R.drawable.fakespot_logo))
+                .build();
+            this.getIntent().setData(uri);
             this.getIntent().addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
     }
